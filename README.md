@@ -1,6 +1,15 @@
+# IMPORTANT!
+
+This project was moved to https://github.com/js-cookie/js-cookie, check [the discussion](https://github.com/carhartl/jquery-cookie/issues/349).
+
+New issues should be opened at https://github.com/js-cookie/js-cookie/issues
+
 # jquery.cookie [![Build Status](https://travis-ci.org/carhartl/jquery-cookie.png?branch=master)](https://travis-ci.org/carhartl/jquery-cookie) [![Code Climate](https://codeclimate.com/github/carhartl/jquery-cookie.png)](https://codeclimate.com/github/carhartl/jquery-cookie)
 
 A simple, lightweight jQuery plugin for reading, writing and deleting cookies.
+
+**If you're viewing this, you're reading the documentation for the old repository.
+[View documentation for the latest backwards compatible release (1.5.1).](https://github.com/js-cookie/js-cookie/tree/v1.5.1)**
 
 ## Build Status Matrix
 
@@ -17,49 +26,54 @@ Include script *after* the jQuery library (unless you are packaging scripts some
 **Do not include the script directly from GitHub (http://raw.github.com/...).** The file is being served as text/plain and as such being blocked
 in Internet Explorer on Windows 7 for instance (because of the wrong MIME type). Bottom line: GitHub is not a CDN.
 
-The plugin can also be loaded as AMD module.
+The plugin can also be loaded as AMD or CommonJS module.
 
 ## Usage
 
 Create session cookie:
 
 ```javascript
-$.cookie('the_cookie', 'the_value');
+$.cookie('name', 'value');
 ```
 
 Create expiring cookie, 7 days from then:
 
 ```javascript
-$.cookie('the_cookie', 'the_value', { expires: 7 });
+$.cookie('name', 'value', { expires: 7 });
 ```
 
 Create expiring cookie, valid across entire site:
 
 ```javascript
-$.cookie('the_cookie', 'the_value', { expires: 7, path: '/' });
+$.cookie('name', 'value', { expires: 7, path: '/' });
 ```
 
 Read cookie:
 
 ```javascript
-$.cookie('the_cookie'); // => "the_value"
-$.cookie('not_existing'); // => undefined
+$.cookie('name'); // => "value"
+$.cookie('nothing'); // => undefined
 ```
 
 Read all available cookies:
 
 ```javascript
-$.cookie(); // => { "the_cookie": "the_value", "...remaining": "cookies" }
+$.cookie(); // => { "name": "value" }
 ```
 
 Delete cookie:
 
 ```javascript
-// Returns true when cookie was found, false when no cookie was found...
-$.removeCookie('the_cookie');
+// Returns true when cookie was successfully deleted, otherwise false
+$.removeCookie('name'); // => true
+$.removeCookie('nothing'); // => false
 
-// Same path as when the cookie was written...
-$.removeCookie('the_cookie', { path: '/' });
+// Need to use the same attributes (path, domain) as what the cookie was written with
+$.cookie('name', 'value', { path: '/' });
+// This won't work!
+$.removeCookie('name'); // => false
+// This will work!
+$.removeCookie('name', { path: '/' }); // => true
 ```
 
 *Note: when deleting a cookie, you must pass the exact same path, domain and secure options that were used to set the cookie, unless you're relying on the default options that is.*
